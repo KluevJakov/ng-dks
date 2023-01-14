@@ -1,0 +1,28 @@
+#logoType {
+    margin-left: 20px;
+}
+
+#headerOpts {
+    margin-right: 20px;
+}
+
+header {
+    display: flex;
+    height: 60px;
+    background: #2d6a95;
+    font-size: 20pt;
+    color: white;
+    justify-content: space-between;
+    align-items: center;
+}
+
+a {
+    text-decoration: none;
+    transition: all .2s linear;
+    color: #fff;
+}
+
+a:hover {
+    color: #d5a2f0;
+    transition: all .2s ease;
+}

@@ -1,1 +1,67 @@
 /* You can add global styles to this file, and also import other style files */
+
+* {
+    font-family: 'Raleway', sans-serif;
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+.footer {
+    padding: 2rem 1rem;
+    background: rgb(45, 106, 149);
+    color: #fff;
+}
+
+.footer-contact {
+    margin-bottom: 2.8rem;
+}
+
+.footer-contact-text {
+    font-style: normal;
+    font-size: 22px;
+    line-height: 17px;
+    color: #fbfbfb;
+}
+
+.footer-contact-menu {
+    color: #fbfbfb;
+    font-size: 22px;
+    -moz-column-count: 2;
+    column-count: 2;
+}
+
+.footer-contact-social {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.copyright {
+    font-size: 14px;
+    line-height: 17px;
+    color: #fbfbfb;
+}
+
+a {
+    text-decoration: none;
+    transition: all .2s linear;
+    color: #fff;
+}
+
+a:hover {
+    color: #d5a2f0;
+    transition: all .2s ease;
+}
+
+.footer-contact-menu a {
+    font-size: 22px;
+    line-height: 17px;
+    color: #fbfbfb;
+    margin-bottom: 1rem;
+}
+
+.footer-contact-menu a:hover {
+    color: #d5a2f0;
+    transition: all .2s ease;
+}

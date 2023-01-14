@@ -1,0 +1,11 @@
+.inpt {
+    height: 60px;
+    padding: 15px;
+}
+
+.inptBox {
+    flex-direction: column;
+    width: 350px;
+    height: 250px;
+    justify-content: space-evenly;
+}

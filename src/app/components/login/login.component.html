@@ -1,0 +1,8 @@
+<div class="container-fluid d-flex flex-column justify-content-center align-items-center h-100">
+    <div class="d-flex inptBox">
+            <input class="inpt" type="login" id="login" placeholder="Логин" formControlName="login" required>
+            <input class="inpt" type="password" id="password" placeholder="Пароль" formControlName="password" minlength="8" maxlength="20" required>
+            <button class="inpt btn-reg-log" style="width: 100%;" (click)="loginAction()">Войти</button>
+            <span *ngIf="hasError" class="alert alert-warning" role="alert">{{errorMsg}}</span>
+    </div>
+</div>

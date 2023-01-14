@@ -1,0 +1,19 @@
+<ng-container *ngIf="user!.role[0].systemName == 'TEACHER'">
+    <div>
+        <h3>Список занятий</h3>
+    </div>
+    <div>
+        <div>
+            <h3>Расписание занятий</h3>
+        </div>
+        <div>
+            <h3>Мои группы</h3>
+        </div>
+    </div>
+</ng-container>
+
+<ng-container *ngIf="user!.role[0].systemName == 'STUDENT'">
+    <div>
+        <h3>Расписание занятий</h3>
+    </div>
+</ng-container>
