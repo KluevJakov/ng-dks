@@ -1,19 +1,55 @@
-<ng-container *ngIf="user!.role[0].systemName == 'TEACHER'">
-    <div>
-        <h3>Список занятий</h3>
-    </div>
-    <div>
-        <div>
-            <h3>Расписание занятий</h3>
+<ng-container *ngIf="user">
+    <ng-container *ngIf="user.role[0].systemName == 'ADMIN'">
+        <div class="commonBlock">
+            <div class="lColumn">
+                <div class="realBlock" style="height: 400px;">
+                    <h3>Управление группами</h3>
+                    <app-group-block></app-group-block>
+                </div>
+                <div class="realBlock" style="height: 400px;">
+                    <h3>Управление пользователями</h3>
+                    <app-user-block></app-user-block>
+                </div>
+            </div>
+            <div class="rColumn">
+                <div class="realBlock">
+                    <h3>Управление занятиями</h3>
+                    <app-calendar-block></app-calendar-block>
+                </div>
+            </div>
         </div>
-        <div>
-            <h3>Мои группы</h3>
-        </div>
-    </div>
-</ng-container>
+    </ng-container>
 
-<ng-container *ngIf="user!.role[0].systemName == 'STUDENT'">
-    <div>
-        <h3>Расписание занятий</h3>
-    </div>
+    <ng-container *ngIf="user.role[0].systemName == 'TEACHER'">
+        <div class="commonBlock">
+            <div class="lColumn">
+                <div class="realBlock">
+                    <h3>Расписание моих занятий</h3>
+                    <app-calendar-block></app-calendar-block>
+                </div>
+            </div>
+            <div class="rColumn">
+                <div class="realBlock">
+                    <h3>Мои группы</h3>
+                    <app-group-block></app-group-block>
+                </div>
+            </div>
+        </div>
+    </ng-container>
+
+    <ng-container *ngIf="user.role[0].systemName == 'STUDENT'">
+        <div class="commonBlock">
+            <div class="lColumn">
+                <div class="realBlock">
+                    <h3>Расписание занятий</h3>
+                    <app-calendar-block></app-calendar-block>
+                </div>
+            </div>
+            <div class="rColumn">
+                <div class="realBlock">
+                    <h3>Мои данные</h3>
+                </div>
+            </div>
+        </div>
+    </ng-container>
 </ng-container>

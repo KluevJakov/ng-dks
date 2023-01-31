@@ -1,0 +1,37 @@
+<div>
+    <div style="display: flex;justify-content: space-between;">
+        <div style="margin-bottom: 10px;">
+            <input type="radio" class="btn-check" name="options-outlined" id="success-outlined" autocomplete="off"
+                (click)="filterUsers(2)" checked>
+            <label class="btn btn-outline-success" for="success-outlined"
+                style="margin-right: 5px;">Преподаватели</label>
+            <input type="radio" class="btn-check" name="options-outlined" id="primary-outlined" (click)="filterUsers(1)"
+                autocomplete="off">
+            <label class="btn btn-outline-primary" for="primary-outlined">Студенты</label>
+        </div>
+        <div style="margin-bottom: 10px;">
+            <button class="btn btn-outline-success" id="createButton" (click)="createUser()">Создать пользователя</button>
+        </div>
+    </div>
+
+    <table class="table table-bordered table-hover">
+        <thead>
+            <tr>
+                <th scope="col">№</th>
+                <th scope="col">Фамилия</th>
+                <th scope="col">Имя</th>
+                <th scope="col">Отчество</th>
+                <th scope="col">Телефон</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr *ngFor="let user of users; let i = index" (click)="readUser(user)">
+                <th scope="row">{{ i+1 }}</th>
+                <td>{{ user.surname }}</td>
+                <td>{{ user.name }}</td>
+                <td>{{ user.patronymic }}</td>
+                <td>{{ user.parentPhone }}</td>
+            </tr>
+        </tbody>
+    </table>
+</div>
