@@ -5,7 +5,7 @@ import { Observable } from 'rxjs';
 import { AuthService } from 'src/app/auth.service';
 import { Role } from 'src/app/models/role';
 import { User } from 'src/app/models/user';
-import { environment } from 'src/environments/ environment';
+import { environment } from 'src/environments/environment';
 
 const API_URL: string = environment.apiUrl;
 

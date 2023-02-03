@@ -3,7 +3,7 @@
     width: 100%;
 }
 
-.commonBlock h3{
+.commonBlock h3 {
     margin-bottom: 20px;
 }
 
@@ -20,3 +20,18 @@
     padding: 5px;
 }
 
+@media screen and (max-width: 1400px) {
+    .commonBlock {
+        display: flex;
+        width: 100%;
+        flex-direction: column;
+    }
+
+    .lColumn {
+        width: 100%;
+    }
+
+    .rColumn {
+        width: 100%;
+    }
+}

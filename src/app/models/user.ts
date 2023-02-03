@@ -4,20 +4,24 @@ export class User {
   id!: number;
   token!:string;
   login!:string;
-  role!:Array<Role>;
+  roles!:Array<Role>;
   surname!:string;
   name!:string;
   patronymic!:string;
-  parentPhone!:string;
+  contact!:string;
+  email!:string;
+  password!:string;
+  passwordAccept!:string;
 
   constructor(user:any){
     this.id = user.id;
     this.token = user.token;
     this.login = user.login;
-    this.role = user.roles;
+    this.roles = user.roles;
     this.surname = user.surname;
     this.name = user.name;
     this.patronymic = user.patronymic;
-    this.parentPhone = user.parentPhone;
+    this.contact = user.contact;
   }
+
 }

@@ -1,5 +1,5 @@
 <div>
-    <div style="display: flex;justify-content: space-between;">
+    <div style="display: flex;justify-content: space-between; align-items: center;">
         <div style="margin-bottom: 10px;">
             <input type="radio" class="btn-check" name="options-outlined" id="success-outlined" autocomplete="off"
                 (click)="filterUsers(2)" checked>
@@ -9,29 +9,37 @@
                 autocomplete="off">
             <label class="btn btn-outline-primary" for="primary-outlined">Студенты</label>
         </div>
+
         <div style="margin-bottom: 10px;">
-            <button class="btn btn-outline-success" id="createButton" (click)="createUser()">Создать пользователя</button>
+            <input type="text" id="search" placeholder="Поиск.." (keyup)="searchUsers()">
+        </div>
+
+        <div style="margin-bottom: 10px;">
+            <button class="btn btn-outline-success" id="createButton" (click)="createUser()">Создать
+                пользователя</button>
         </div>
     </div>
 
-    <table class="table table-bordered table-hover">
-        <thead>
-            <tr>
-                <th scope="col">№</th>
-                <th scope="col">Фамилия</th>
-                <th scope="col">Имя</th>
-                <th scope="col">Отчество</th>
-                <th scope="col">Телефон</th>
-            </tr>
-        </thead>
-        <tbody>
-            <tr *ngFor="let user of users; let i = index" (click)="readUser(user)">
-                <th scope="row">{{ i+1 }}</th>
-                <td>{{ user.surname }}</td>
-                <td>{{ user.name }}</td>
-                <td>{{ user.patronymic }}</td>
-                <td>{{ user.parentPhone }}</td>
-            </tr>
-        </tbody>
-    </table>
+    <div style="overflow: auto;height: 340px;">
+        <table class="table table-bordered table-hover">
+            <thead>
+                <tr>
+                    <th scope="col">№</th>
+                    <th scope="col">Фамилия</th>
+                    <th scope="col">Имя</th>
+                    <th scope="col">Отчество</th>
+                    <th scope="col">Телефон</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr *ngFor="let user of users; let i = index" (click)="readUser(user)">
+                    <th scope="row">{{ i+1 }}</th>
+                    <td>{{ user.surname }}</td>
+                    <td>{{ user.name }}</td>
+                    <td>{{ user.patronymic }}</td>
+                    <td>{{ user.contact }}</td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
 </div>

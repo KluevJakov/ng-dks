@@ -16,6 +16,7 @@ import { CalendarBlockComponent } from './components/calendar-block/calendar-blo
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { GroupBlockComponent } from './components/group-block/group-block.component';
 import { UserBlockComponent } from './components/user-block/user-block.component';
+import { CommonModule } from '@angular/common';
 
 @NgModule({
   declarations: [
@@ -33,6 +34,7 @@ import { UserBlockComponent } from './components/user-block/user-block.component
     BrowserAnimationsModule,
     AppRoutingModule,
     NgbModule,
+    CommonModule,
     HttpClientModule,
     ContextMenuModule,
     CalendarModule.forRoot({ provide: DateAdapter, useFactory: adapterFactory })

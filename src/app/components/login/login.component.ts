@@ -2,7 +2,7 @@ import { HttpClient, HttpErrorResponse } from '@angular/common/http';
 import { Component } from '@angular/core';
 import { Router } from '@angular/router';
 import { AuthService } from 'src/app/auth.service';
-import { environment } from 'src/environments/ environment';
+import { environment } from 'src/environments/environment';
 
 const API_URL: string = environment.apiUrl;
 

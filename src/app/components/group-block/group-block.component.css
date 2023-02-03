@@ -1,0 +1,10 @@
+.catBlock {
+    display: flex;
+    width: 100%;
+    overflow: auto;
+    height: 40px;
+}
+
+.btn {
+    white-space: nowrap;
+}

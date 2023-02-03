@@ -19,7 +19,7 @@ import localeRu from '@angular/common/locales/ru';
 import { registerLocaleData } from '@angular/common';
 import { collapseAnimation } from 'angular-calendar';
 import { ModalCreateEvent } from 'src/app/modals/modal-create-event';
-import { environment } from 'src/environments/ environment';
+import { environment } from 'src/environments/environment';
 import { HttpClient, HttpErrorResponse } from '@angular/common/http';
 import { Router } from '@angular/router';
 import { AuthService } from 'src/app/auth.service';
@@ -81,7 +81,6 @@ export class CalendarBlockComponent {
       color: event.color,
       allDay: false,
     });
-    console.log(this.events);
     this.refresh.next();
   }
 
@@ -95,7 +94,6 @@ export class CalendarBlockComponent {
       this.http.post<any>(API_URL + '/lesson/create', receivedEntry, AuthService.getJwtHeaderJSON())
         .subscribe(
           (result: any) => {
-            console.log(result);
             this.refreshScedule();
           },
           (error: HttpErrorResponse) => {
@@ -127,7 +125,6 @@ export class CalendarBlockComponent {
 
   handleEvent(action: string, event: CalendarEvent): void {
     this.modalData = { event, action };
-    console.log(event.id);
     const modalRef = this.modalService.open(ModalViewEvent, { size: 'lg' });
     modalRef.componentInstance.modalTitle = "Событие: " + event.title;
     modalRef.componentInstance.event = event;

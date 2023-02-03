@@ -3,9 +3,9 @@ export class Role {
   displayName!:string;
   systemName!:string;
 
-  constructor(user:any){
-    this.id = user.id;
-    this.displayName = user.displayName;
-    this.systemName = user.systemName;
+  constructor(role:any){
+    this.id = role.id;
+    this.displayName = role.displayName;
+    this.systemName = role.systemName;
   }
 }

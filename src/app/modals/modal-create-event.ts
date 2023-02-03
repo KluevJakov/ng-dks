@@ -1,9 +1,18 @@
+import { CommonModule } from '@angular/common';
+import { HttpClient, HttpErrorResponse } from '@angular/common/http';
 import { Component, EventEmitter, Input, Output } from '@angular/core';
 import { NgbActiveModal, NgbModal } from '@ng-bootstrap/ng-bootstrap';
+import { environment } from 'src/environments/environment';
+import { AuthService } from '../auth.service';
+import { Group } from '../models/group';
+import { User } from '../models/user';
+
+const API_URL: string = environment.apiUrl;
 
 @Component({
     selector: 'modal-create-event',
     standalone: true,
+    imports: [CommonModule],
     template: `
 		<div class="modal-header">
 			<h4 class="modal-title">{{ modalTitle }}</h4>
@@ -11,20 +20,15 @@ import { NgbActiveModal, NgbModal } from '@ng-bootstrap/ng-bootstrap';
 		</div>
 		<div class="modal-body">
             <p>День занятия: {{ dateOfLesson }}</p>
-            <p>Начало занятия: <input type="time" id="startTime" required></p>
-            <p>Конец занятия: <input type="time" id="endTime" required></p>
+            <p>Начало занятия: <input type="time" min="08:00" max="23:00" timeformat="24h" id="startTime" required></p>
+            <p>Конец занятия: <input type="time" min="08:00" max="23:00" id="endTime" required></p>
             <p>Цвет метки: <input type="color" id="colorEvent" required></p>
             <p>Назовите событие: <input type="text" id="textEvent" minlength="1" maxlength="100" required></p>
             <p>Описание события: </p>
-            <textarea id="textDescription" minlength="1" maxlength="2000" style="width: 100%;"></textarea>
-            <p>Назначить преподавателя: 
-                <select>
-                    <option></option>
-                </select>
-            </p>
+            <textarea id="textDescription" minlength="1" maxlength="2000" style="width: 100%; margin-bottom: 20px"></textarea>
             <p>Назначить группу: 
-                <select>
-                    <option></option>
+                <select id="group">
+                    <option *ngFor="let g of groups" value='{{ g.id }}'>{{ g.name }}</option>
                 </select>
             </p>
 		</div>
@@ -40,13 +44,18 @@ export class ModalCreateEvent {
     @Output() passEntry: EventEmitter<any> = new EventEmitter();
 
     dateOfLesson: any;
+    teachers: Array<User> = [];
+    groups: Array<Group> = [];
 
-    constructor(public activeModal: NgbActiveModal) { }
+    constructor(public activeModal: NgbActiveModal, private http: HttpClient) { }
 
     ngOnInit() {
         this.dateOfLesson = this.date.toLocaleString("ru-RU", { weekday: "long", month: "long", day: "numeric" });
         (document.getElementById("startTime") as HTMLInputElement).value = this.date.toLocaleTimeString("ru-RU", { minute: "numeric", hour: "numeric" });
         (document.getElementById("endTime") as HTMLInputElement).value = this.date.toLocaleTimeString("ru-RU", { minute: "numeric", hour: "numeric" });
+
+        this.readTeachers();
+        this.readGroups();
     }
 
     createEvent() {
@@ -94,8 +103,32 @@ export class ModalCreateEvent {
                 primary: (document.getElementById("colorEvent") as HTMLInputElement).value,
             },
             description: (document.getElementById("textDescription") as HTMLInputElement).value,
-
+            group: { id: (document.getElementById("group") as HTMLSelectElement).value}
         }
         this.passEntry.emit(newEvent);
+    }
+
+    readTeachers() {
+        this.http.get<any>(API_URL + '/users/byRole/2', AuthService.getJwtHeaderJSON())
+      .subscribe(
+        (result: any) => {
+          this.teachers = result;
+        },
+        (error: HttpErrorResponse) => {
+          console.log(error.error);
+        }
+      );
+    }
+
+    readGroups() {
+        this.http.get<any>(API_URL + '/groups/', AuthService.getJwtHeaderJSON())
+      .subscribe(
+        (result: any) => {
+          this.groups = result;
+        },
+        (error: HttpErrorResponse) => {
+          console.log(error.error);
+        }
+      );
     }
 }

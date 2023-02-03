@@ -1,11 +1,12 @@
 <ng-container *ngIf="user">
-    <ng-container *ngIf="user.role[0].systemName == 'ADMIN'">
+    <ng-container *ngIf="user.roles[0].systemName == 'ADMIN'">
         <div class="commonBlock">
             <div class="lColumn">
-                <div class="realBlock" style="height: 400px;">
+                <div class="realBlock" style="height: 470px;">
                     <h3>Управление группами</h3>
                     <app-group-block></app-group-block>
                 </div>
+                <hr style="margin-top: 50px;">
                 <div class="realBlock" style="height: 400px;">
                     <h3>Управление пользователями</h3>
                     <app-user-block></app-user-block>
@@ -20,7 +21,7 @@
         </div>
     </ng-container>
 
-    <ng-container *ngIf="user.role[0].systemName == 'TEACHER'">
+    <ng-container *ngIf="user.roles[0].systemName == 'TEACHER'">
         <div class="commonBlock">
             <div class="lColumn">
                 <div class="realBlock">
@@ -37,7 +38,7 @@
         </div>
     </ng-container>
 
-    <ng-container *ngIf="user.role[0].systemName == 'STUDENT'">
+    <ng-container *ngIf="user.roles[0].systemName == 'STUDENT'">
         <div class="commonBlock">
             <div class="lColumn">
                 <div class="realBlock">

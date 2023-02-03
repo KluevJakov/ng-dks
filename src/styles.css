@@ -8,6 +8,20 @@
     box-sizing: border-box;
 }
 
+html {
+    min-width: 770px;
+}
+
+.modal-body p {
+    display: flex;
+    justify-content: space-between;
+}
+
+.modal-body select {
+    width: 217px;
+    height: 28px;
+}
+
 .footer {
     padding: 2rem 1rem;
     background: rgb(45, 106, 149);
@@ -196,4 +210,17 @@ context-menu-content .ngx-contextmenu ul.ngx-contextmenu--dropdown-menu>li>[role
 
 context-menu-content .ngx-contextmenu[dir='rtl'] ul.ngx-contextmenu--dropdown-menu .ngx-contextmenu--parent-menu:after {
     content: var(--ngx-contextmenu-item-arrow-left);
+}
+
+.modal-body table tr {
+    cursor: pointer;
+    height: 40px;
+    display: flex;
+    align-items: center;
+    transition: .3s;
+}
+
+.modal-body table tr:hover {
+    background: #eaeaea;
+    transition: .3s;
 }

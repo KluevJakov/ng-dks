@@ -1,1 +1,36 @@
-<p>group-block works!</p>
+<div>
+    <div style="display: flex;justify-content: space-between; align-items: center;">
+        <div style="margin-bottom: 10px;">
+            <button class="btn btn-outline-success" style="margin-right: 5px;" id="createCategoryButton"
+                (click)="createCat()">Создать направление</button>
+            <button class="btn btn-outline-success" id="createGroupButton" (click)="createGroup()">Создать
+                группу</button>
+        </div>
+        <div style="margin-bottom: 10px;">
+            <input type="text" id="searchGroup" placeholder="Поиск.." (keyup)="searchGroups()">
+        </div>
+    </div>
+
+    <div style="overflow: auto;height: 340px;">
+        <table class="table table-bordered table-hover">
+            <thead>
+                <tr>
+                    <th scope="col">№</th>
+                    <th scope="col">Название</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr *ngFor="let group of groups; let i = index" (click)="readGroup(group)">
+                    <th scope="row">{{ i+1 }}</th>
+                    <td>{{ group.name }}</td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+    <div class="catBlock" class="btn-group" role="group" aria-label="Basic radio toggle button group">
+        <ng-container *ngFor="let cat of cats; let i = index">
+            <input type="radio" class="btn-check" name="btnradio" id="btnradio{{i}}" autocomplete="off" (click)="filterGroups(cat.id)">
+            <label class="btn btn-outline-primary" for="btnradio{{i}}">{{cat.name}}</label>
+        </ng-container>
+    </div>
+</div>
