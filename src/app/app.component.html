@@ -16,6 +16,7 @@
     <div id="logoType"><a href="/">ДКШ</a></div>
     <div id="headerOpts" *ngIf="!authService.isUserLoggedIn()"><a href="/login">Вход</a></div>
     <div id="headerOpts" *ngIf="authService.isUserLoggedIn()">
+      <a href="/tutorial" style="padding-right: 20px;">Документация</a>
       <a href="/profile" style="padding-right: 20px;">Профиль</a>
       <a href="#" (click)="authService.logOut()">Выход</a>
     </div>

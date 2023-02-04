@@ -1,0 +1,89 @@
+<h2 style="margin-bottom: 30px;">Руководство для роли - {{currentUser.roles[0].displayName}}</h2>
+
+<hr style="margin-bottom: 30px;">
+
+<ngb-accordion [closeOthers]="true" activeIds="static-1">
+    <ng-container *ngIf="currentUser.roles[0].systemName == 'ADMIN'">
+        <ngb-panel id="static-1" title="Основные понятия">
+            <ng-template ngbPanelContent>
+                <ul class="list-group">
+                    <li class="list-group-item"><b>Пользователь</b> - сущность для хранения информации о преподавателях и клиентах</li>
+                    <li class="list-group-item"><b>Роль</b> - сущность для хранения информации о привилегиях пользователя (Администратор/Преподаватель/Студент)</li>
+                    <li class="list-group-item"><b>Направление</b> - сущность, объединяющую группу занятий одной категории</li>
+                    <li class="list-group-item"><b>Группа</b> - сущность, объединяющая группу студентов и их преподавателя</li>
+                    <li class="list-group-item"><b>Занятие</b> - ограниченное по времени событие для определенной группы</li>
+                </ul>
+            </ng-template>
+        </ngb-panel>
+        <ngb-panel id="static-2" title="Основные возможности">
+            <ng-template ngbPanelContent>
+                <table class="table table-bordered">
+                    <thead>
+                      <tr>
+                        <th scope="col">Действие</th>
+                        <th scope="col">Инструкция</th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      <tr>
+                        <th scope="row">Создание аккаунта пользователя</th>
+                        <td><img src="assets/images/createUser.gif"></td>
+                      </tr>
+                      <tr>
+                        <th scope="row">Поиск пользователей<br>Просмотр аккаунта пользователя</th>
+                        <td><img src="assets/images/searchUsers.gif"></td>
+                      </tr>
+                      <tr>
+                        <th scope="row">Изменение аккаунта пользователя</th>
+                        <td><img src="assets/images/editUser.gif"></td>
+                      </tr>
+                      <tr>
+                        <th scope="row">Деактивация/Активация аккаунта пользователя</th>
+                        <td><img src="assets/images/activateUser.gif"></td>
+                      </tr>
+                      <tr>
+                        <th scope="row">Контроль оплаты пользователя (студента)</th>
+                        <td><img src="assets/images/payUser.gif"></td>
+                      </tr>
+                      <tr>
+                        <th scope="row">Создание направления<br>Изменение направления<br>Удаление направления</th>
+                        <td><img src="assets/images/cat.gif"></td>
+                      </tr>
+                      <tr>
+                        <th scope="row">Создание группы<br>Поиск группы<br>Изменение группы<br>Удаление группы</th>
+                        <td><img src="assets/images/"></td>
+                      </tr>
+                      <tr>
+                        <th scope="row">Создание занятия<br>Изменение занятия<br>Удаление занятия</th>
+                        <td><img src="assets/images/"></td>
+                      </tr>
+                    </tbody>
+                  </table>
+            </ng-template>
+        </ngb-panel>
+    </ng-container>
+    <ng-container *ngIf="currentUser.roles[0].systemName == 'TEACHER'">
+        <ngb-panel id="static-1" title="Основные понятия">
+            <ng-template ngbPanelContent>
+
+            </ng-template>
+        </ngb-panel>
+        <ngb-panel id="static-2" title="Основные возможности">
+            <ng-template ngbPanelContent>
+
+            </ng-template>
+        </ngb-panel>
+    </ng-container>
+    <ng-container *ngIf="currentUser.roles[0].systemName == 'STUDENT'">
+        <ngb-panel id="static-1" title="Основные понятия">
+            <ng-template ngbPanelContent>
+
+            </ng-template>
+        </ngb-panel>
+        <ngb-panel id="static-2" title="Основные возможности">
+            <ng-template ngbPanelContent>
+
+            </ng-template>
+        </ngb-panel>
+    </ng-container>
+</ngb-accordion>

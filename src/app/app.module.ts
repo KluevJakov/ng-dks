@@ -5,7 +5,6 @@ import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { HomeComponent } from './components/home/home.component';
 import { LoginComponent } from './components/login/login.component';
-import { RegisterComponent } from './components/register/register.component';
 import { NgbModule, NgbTimepickerModule } from '@ng-bootstrap/ng-bootstrap';
 import { ContextMenuModule } from '@perfectmemory/ngx-contextmenu';
 import { HttpClientModule } from '@angular/common/http';
@@ -17,17 +16,18 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { GroupBlockComponent } from './components/group-block/group-block.component';
 import { UserBlockComponent } from './components/user-block/user-block.component';
 import { CommonModule } from '@angular/common';
+import { TutorialComponent } from './components/tutorial/tutorial.component';
 
 @NgModule({
   declarations: [
     AppComponent,
     HomeComponent,
     LoginComponent,
-    RegisterComponent,
     ProfileComponent,
     CalendarBlockComponent,
     GroupBlockComponent,
     UserBlockComponent,
+    TutorialComponent,
   ],
   imports: [
     BrowserModule,
