@@ -34,7 +34,7 @@ const API_URL: string = environment.apiUrl;
             <button type="button" class="btn" 
                 [ngClass]="{'btn-outline-danger' : user.paymentStatus, 
                         'btn-outline-success' : !user.paymentStatus}" 
-                *ngIf="currentUser.roles[0].systemName == 'ADMIN'" 
+                *ngIf="currentUser.roles[0].systemName == 'ADMIN' && user.roles[0].systemName == 'STUDENT'" 
                 (click)="paymentUser()">
                 {{user.paymentStatus ? "Не оплачено" : "Оплачено"}}
             </button>

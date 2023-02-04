@@ -156,7 +156,7 @@ export class CalendarBlockComponent {
     .subscribe(
       (result: any) => {
         this.user = new User(result);
-        if (this.user?.paymentStatus) {
+        if (this.user?.paymentStatus || this.user.roles[0].systemName != "STUDENT") {
           this.http.get<any>(API_URL + '/lessons/', AuthService.getJwtHeaderJSON())
             .subscribe(
               (result: any) => {
