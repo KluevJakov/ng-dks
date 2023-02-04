@@ -69,7 +69,7 @@ export class ModalCreateUser {
 
         this.user.roles = role;
 
-        this.http.post<any>(API_URL + '/users/create', this.user, AuthService.getJwtHeaderJSON())
+        this.http.post<any>(API_URL + '/users/', this.user, AuthService.getJwtHeaderJSON())
             .subscribe(
                 (result: any) => {
                     console.log(result.error);

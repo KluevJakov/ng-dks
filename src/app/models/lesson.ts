@@ -1,5 +1,5 @@
+import { Color } from "./color";
 import { Group } from "./group";
-import { User } from "./user";
 
 export class Lesson {
   id!: number;
@@ -9,6 +9,7 @@ export class Lesson {
   start!:Date;
   end!:Date;
   group!:Group;
+  color!:Color;
 
   constructor(lesson:any){
     this.id = lesson.id;
@@ -18,5 +19,6 @@ export class Lesson {
     this.start = lesson.start;
     this.end = lesson.end;
     this.group = lesson.group;
+    this.color = lesson.color;
   }
 }

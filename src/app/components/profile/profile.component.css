@@ -20,6 +20,13 @@
     padding: 5px;
 }
 
+.myData {
+    padding: 25px;
+    display: flex;
+    flex-direction: column;
+    align-items: end;
+}
+
 @media screen and (max-width: 1400px) {
     .commonBlock {
         display: flex;

@@ -20,7 +20,7 @@ const API_URL: string = environment.apiUrl;
 			<button type="button" class="btn-close" aria-label="Close" (click)="activeModal.dismiss('Cross click')"></button>
 		</div>
 		<div class="modal-body">
-            <p>Название: <input type="text" id="name" minlength="1" maxlength="100" required></p>
+            <p>Название: <input type="text" id="nameGroup" minlength="1" maxlength="100" required></p>
             <p>Назначить направление: 
                 <select id="category">
                     <option *ngFor="let c of cats" value='{{ c.id }}'>{{ c.name }}</option>
@@ -79,7 +79,7 @@ export class ModalCreateGroup {
 
     createGroup() {
         let group = new Group({});
-        group.name = (document.getElementById("name") as HTMLInputElement).value;
+        group.name = (document.getElementById("nameGroup") as HTMLInputElement).value;
 
         let idCat = parseInt((document.getElementById("category") as HTMLSelectElement).value);
         let idTeacher = parseInt((document.getElementById("teacher") as HTMLSelectElement).value);
@@ -88,7 +88,7 @@ export class ModalCreateGroup {
         group.teacher = new User({ id: idTeacher });
         group.students = this.approvedStudents;
 
-        this.http.post<any>(API_URL + '/groups/create', group, AuthService.getJwtHeaderJSON())
+        this.http.post<any>(API_URL + '/groups/', group, AuthService.getJwtHeaderJSON())
             .subscribe(
                 (result: any) => {
                     console.log(result.error);
@@ -121,7 +121,7 @@ export class ModalCreateGroup {
     }
 
     readCats() {
-        this.http.get<any>(API_URL + '/cats/', AuthService.getJwtHeaderJSON())
+        this.http.get<any>(API_URL + '/categories/', AuthService.getJwtHeaderJSON())
             .subscribe(
                 (result: any) => {
                     this.cats = result;

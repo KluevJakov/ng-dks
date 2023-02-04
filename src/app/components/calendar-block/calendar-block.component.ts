@@ -21,9 +21,9 @@ import { collapseAnimation } from 'angular-calendar';
 import { ModalCreateEvent } from 'src/app/modals/modal-create-event';
 import { environment } from 'src/environments/environment';
 import { HttpClient, HttpErrorResponse } from '@angular/common/http';
-import { Router } from '@angular/router';
 import { AuthService } from 'src/app/auth.service';
 import { ModalViewEvent } from 'src/app/modals/modal-view-event';
+import { User } from 'src/app/models/user';
 
 const API_URL: string = environment.apiUrl;
 
@@ -53,6 +53,8 @@ export class CalendarBlockComponent {
   refresh = new Subject<void>();
   events: CalendarEvent[] = [];
   activeDayIsOpen: boolean = true;
+  user?: User;
+  public currentUser: User = JSON.parse(AuthService.getCurrentUser());
 
   constructor(private modalService: NgbModal,
     private http: HttpClient) { }
@@ -85,24 +87,26 @@ export class CalendarBlockComponent {
   }
 
   onOpen(date: Date) {
-    const modalRef = this.modalService.open(ModalCreateEvent, { size: 'lg' });
-    modalRef.componentInstance.modalTitle = "Создать новое занятие";
-    modalRef.componentInstance.date = date;
-    modalRef.componentInstance.passEntry.subscribe((receivedEntry: any) => {
-      this.addEvent(receivedEntry);
+    if (this.currentUser.roles[0].systemName == 'ADMIN') {
+      const modalRef = this.modalService.open(ModalCreateEvent, { size: 'lg' });
+      modalRef.componentInstance.modalTitle = "Создать новое занятие";
+      modalRef.componentInstance.date = date;
+      modalRef.componentInstance.passEntry.subscribe((receivedEntry: any) => {
+        this.addEvent(receivedEntry);
 
-      this.http.post<any>(API_URL + '/lesson/create', receivedEntry, AuthService.getJwtHeaderJSON())
-        .subscribe(
-          (result: any) => {
-            this.refreshScedule();
-          },
-          (error: HttpErrorResponse) => {
-            console.log(error.error);
-          }
-        );
+        this.http.post<any>(API_URL + '/lessons/', receivedEntry, AuthService.getJwtHeaderJSON())
+          .subscribe(
+            (result: any) => {
+              this.refreshScedule();
+            },
+            (error: HttpErrorResponse) => {
+              console.log(error.error);
+            }
+          );
 
-      modalRef.dismiss();
-    });
+        modalRef.dismiss();
+      });
+    }
   }
 
   eventTimesChanged({
@@ -147,14 +151,26 @@ export class CalendarBlockComponent {
 
   refreshScedule() {
     this.events = [];
-    this.http.get<any>(API_URL + '/lesson/lessons', AuthService.getJwtHeaderJSON())
-      .subscribe(
-        (result: any) => {
-          result.forEach((e: CalendarEvent<any>) => this.addEvent(e));
-        },
-        (error: HttpErrorResponse) => {
-          console.log(error.error);
-        }
-      );
+    
+    this.http.get<any>(API_URL + '/profile', AuthService.getJwtHeaderJSON())
+    .subscribe(
+      (result: any) => {
+        this.user = new User(result);
+        if (this.user?.paymentStatus) {
+          this.http.get<any>(API_URL + '/lessons/', AuthService.getJwtHeaderJSON())
+            .subscribe(
+              (result: any) => {
+                result.forEach((e: CalendarEvent<any>) => this.addEvent(e));
+              },
+              (error: HttpErrorResponse) => {
+                console.log(error.error);
+              }
+            );
+        } 
+      },
+      (error: HttpErrorResponse) => {
+        console.log(error.error);
+      }
+    );
   }
 }

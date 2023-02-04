@@ -10,8 +10,10 @@ export class User {
   patronymic!:string;
   contact!:string;
   email!:string;
+  active!:boolean;
   password!:string;
   passwordAccept!:string;
+  paymentStatus!:boolean;
 
   constructor(user:any){
     this.id = user.id;
@@ -22,6 +24,9 @@ export class User {
     this.name = user.name;
     this.patronymic = user.patronymic;
     this.contact = user.contact;
+    this.email = user.email;
+    this.active = user.active;
+    this.paymentStatus = user.paymentStatus;
   }
 
 }

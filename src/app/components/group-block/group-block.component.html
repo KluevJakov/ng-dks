@@ -1,6 +1,6 @@
 <div>
     <div style="display: flex;justify-content: space-between; align-items: center;">
-        <div style="margin-bottom: 10px;">
+        <div style="margin-bottom: 10px;" *ngIf="currentUser.roles[0].systemName == 'ADMIN'">
             <button class="btn btn-outline-success" style="margin-right: 5px;" id="createCategoryButton"
                 (click)="createCat()">Создать направление</button>
             <button class="btn btn-outline-success" id="createGroupButton" (click)="createGroup()">Создать
@@ -28,9 +28,17 @@
         </table>
     </div>
     <div class="catBlock" class="btn-group" role="group" aria-label="Basic radio toggle button group">
+        <input type="radio" class="btn-check" name="btnradio" id="btnradiostd" autocomplete="off" (click)="filterGroups(-1)" checked>
+        <label class="btn btn-outline-primary" for="btnradiostd">Без направления</label>
         <ng-container *ngFor="let cat of cats; let i = index">
             <input type="radio" class="btn-check" name="btnradio" id="btnradio{{i}}" autocomplete="off" (click)="filterGroups(cat.id)">
-            <label class="btn btn-outline-primary" for="btnradio{{i}}">{{cat.name}}</label>
+            <label class="btn btn-outline-primary" for="btnradio{{i}}" [contextMenu]="catEditMenu" [contextMenuValue]="cat" >{{cat.name}}</label>
         </ng-container>
     </div>
+
+    <context-menu #catEditMenu>
+        <ng-template *ngIf="currentUser.roles[0].systemName == 'ADMIN'" contextMenuItem (execute)="viewCategory($event.value)">
+            Редактировать/удалить направление
+        </ng-template>
+    </context-menu>
 </div>

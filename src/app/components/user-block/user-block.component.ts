@@ -23,7 +23,7 @@ export class UserBlockComponent {
     private http: HttpClient) {}
 
   ngOnInit(){
-    this.filterUsers(2);
+    this.searchUsers();
   }
 
   filterUsers(filterRole : number) {
@@ -44,7 +44,6 @@ export class UserBlockComponent {
       .subscribe(
         (result: any) => {
           this.viewUser(result);
-          console.log(result);
         },
         (error: HttpErrorResponse) => {
           console.log(error.error);
@@ -55,11 +54,14 @@ export class UserBlockComponent {
   searchUsers() {
     let searchRow = (event?.target as HTMLInputElement).value;
 
+    if (!searchRow) {
+      searchRow = "";
+    }
+
     this.http.get<any>(API_URL + '/users/byRole/' + this.currentRole + '?search=' + searchRow, AuthService.getJwtHeaderJSON())
       .subscribe(
         (result: any) => {
           this.users = result;
-          console.log(result);
         },
         (error: HttpErrorResponse) => {
           console.log(error.error);
@@ -71,7 +73,7 @@ export class UserBlockComponent {
     const modalRef = this.modalService.open(ModalCreateUser, { size: 'lg' });
     modalRef.componentInstance.modalTitle = "Создание нового пользователя";
     modalRef.closed.subscribe(e => {
-      this.filterUsers(2);
+      this.searchUsers();
     });
   }
 
@@ -80,7 +82,7 @@ export class UserBlockComponent {
     modalRef.componentInstance.modalTitle = "Просмотр профиля пользователя";
     modalRef.componentInstance.user = user;
     modalRef.closed.subscribe(e => {
-      //
+      this.searchUsers();
     });
   }
 }

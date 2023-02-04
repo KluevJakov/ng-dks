@@ -47,8 +47,20 @@
                 </div>
             </div>
             <div class="rColumn">
-                <div class="realBlock">
+                <div class="realBlock myData">
                     <h3>Мои данные</h3>
+                    <p>Фамилия: <input type="text" id="surname" minlength="1" maxlength="100" value="{{user.surname}}" disabled></p>
+                    <p>Имя: <input type="text" id="name" minlength="1" maxlength="100" value="{{user.name}}" disabled></p>
+                    <p>Отчество: <input type="text" id="patronymic" minlength="1" maxlength="100" value="{{user.patronymic}}" disabled></p>
+                    <p>Email: <input type="text" id="email" minlength="1" maxlength="100" value="{{user.email}}" disabled></p>
+                    <p>Логин: <input type="text" id="login" minlength="1" maxlength="100" value="{{user.login}}" disabled></p>
+                    <p>Телефон: <input type="phone" id="contact" minlength="1" maxlength="100" value="{{user.contact}}" disabled></p>
+                    <p [style]="user.paymentStatus ? 'color: green' : 'color: red'">{{user.paymentStatus ? "Курс оплачен" : "Требуется оплата"}}</p>
+                    <p>Роль:
+                        <select id="role" disabled>
+                            <option>{{ this.user.roles[0].displayName }}</option>
+                        </select>
+                    </p>
                 </div>
             </div>
         </div>

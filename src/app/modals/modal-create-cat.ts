@@ -44,7 +44,7 @@ export class ModalCreateCat {
     createCat() {
         this.category.name = (document.getElementById("name") as HTMLInputElement).value;
         
-        this.http.post<any>(API_URL + '/cats/create', this.category, AuthService.getJwtHeaderJSON())
+        this.http.post<any>(API_URL + '/categories/', this.category, AuthService.getJwtHeaderJSON())
             .subscribe(
                 (result: any) => {
                     console.log(result.error);

@@ -4,9 +4,11 @@ import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { AuthService } from 'src/app/auth.service';
 import { ModalCreateCat } from 'src/app/modals/modal-create-cat';
 import { ModalCreateGroup } from 'src/app/modals/modal-create-group';
+import { ModalViewCat } from 'src/app/modals/modal-view-cat';
 import { ModalViewGroup } from 'src/app/modals/modal-view-group';
 import { Category } from 'src/app/models/category';
 import { Group } from 'src/app/models/group';
+import { User } from 'src/app/models/user';
 import { environment } from 'src/environments/environment';
 
 const API_URL: string = environment.apiUrl;
@@ -20,14 +22,15 @@ export class GroupBlockComponent {
 
   public groups: Array<Group> = [];
   public cats: Array<Category> = [];
-  public currentCat?: number = 0;
+  public currentCat?: number = -1;
+  public currentUser: User = JSON.parse(AuthService.getCurrentUser());
 
   constructor(private modalService: NgbModal,
     private http: HttpClient) {}
 
   ngOnInit(){
+    this.filterGroups(-1);
     this.readCategories();
-    //this.filterGroups(2);
   }
 
   filterGroups(filterCat : number) {
@@ -44,7 +47,7 @@ export class GroupBlockComponent {
   }
 
   readCategories() {
-    this.http.get<any>(API_URL + '/cats/', AuthService.getJwtHeaderJSON())
+    this.http.get<any>(API_URL + '/categories/', AuthService.getJwtHeaderJSON())
       .subscribe(
         (result: any) => {
           this.cats = result;
@@ -74,7 +77,6 @@ export class GroupBlockComponent {
       .subscribe(
         (result: any) => {
           this.groups = result;
-          console.log(result);
         },
         (error: HttpErrorResponse) => {
           console.log(error.error);
@@ -86,7 +88,7 @@ export class GroupBlockComponent {
     const modalRef = this.modalService.open(ModalCreateGroup, { size: 'lg' });
     modalRef.componentInstance.modalTitle = "Создание новой группы";
     modalRef.closed.subscribe(e => {
-      //this.filterUsers(2);
+      this.searchGroups();
     });
   }
 
@@ -103,8 +105,18 @@ export class GroupBlockComponent {
     modalRef.componentInstance.modalTitle = "Просмотр группы";
     modalRef.componentInstance.group = group;
     modalRef.closed.subscribe(e => {
-      //
+      this.searchGroups();
     });
   }
-  
+
+  viewCategory(category: any) {
+    const modalRef = this.modalService.open(ModalViewCat, { size: 'lg' });
+    modalRef.componentInstance.modalTitle = "Просмотр направления";
+    modalRef.componentInstance.category = category;
+    modalRef.closed.subscribe(e => {
+      this.readCategories();
+      this.currentCat = -1;
+      this.searchGroups();
+    });
+  }
 }
