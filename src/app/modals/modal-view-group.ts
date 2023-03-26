@@ -69,6 +69,7 @@ const API_URL: string = environment.apiUrl;
 		</div>
 		<div class="modal-footer">
             <button type="button" class="btn btn-outline-dark" *ngIf="currentUser.roles[0].systemName == 'ADMIN'" (click)="editGroup()">Редактировать</button>
+            <button type="button" class="btn btn-outline-dark" *ngIf="currentUser.roles[0].systemName == 'ADMIN'" (click)="removeGroup()">Удалить</button>
 			<button type="button" class="btn btn-outline-dark" (click)="activeModal.close('Close click')">Закрыть</button>
 		</div>
 	`,
@@ -83,7 +84,7 @@ export class ModalViewGroup {
     cats: Array<Category> = [];
     teachers: Array<User> = [];
     students: Array<User> = [];
-    approvedStudents: Array<User> = []; 
+    approvedStudents: Array<User> = [];
     allowToEdit: boolean = false;
 
     constructor(public activeModal: NgbActiveModal,
@@ -120,6 +121,20 @@ export class ModalViewGroup {
             this.readCats();
             this.readTeachers();
             this.readStudents();
+        }
+    }
+
+    removeGroup() {
+        if (confirm("Вы уверены?")) {
+            this.http.delete<any>(API_URL + '/groups/' + this.group.id, AuthService.getJwtHeaderJSON())
+                .subscribe(
+                    (result: any) => {
+                        this.activeModal.close();
+                    },
+                    (error: HttpErrorResponse) => {
+                        console.log(error.error);
+                    }
+                );
         }
     }
 

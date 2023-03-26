@@ -15,8 +15,7 @@
         </div>
 
         <div style="margin-bottom: 10px;">
-            <button class="btn btn-outline-success" id="createButton" (click)="createUser()">Создать
-                пользователя</button>
+            <button class="btn btn-outline-success" id="createButton" (click)="createUser()">Создать пользователя</button>
         </div>
     </div>
 
@@ -32,7 +31,10 @@
                 </tr>
             </thead>
             <tbody>
-                <tr *ngFor="let user of users; let i = index" (click)="readUser(user)">
+                <tr *ngFor="let user of users; let i = index" 
+                [ngClass]="{'paidRow' : user.paymentStatus && user.roles[0].systemName != 'TEACHER', 
+                        'unpaidRow' : !user.paymentStatus && user.roles[0].systemName != 'TEACHER'}" 
+                (click)="readUser(user)">
                     <th scope="row">{{ i+1 }}</th>
                     <td>{{ user.surname }}</td>
                     <td>{{ user.name }}</td>

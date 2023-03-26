@@ -26,6 +26,7 @@
     "bootstrap": "^5.2.3",
     "date-fns": "^2.29.3",
     "ngx-contextmenu": "^6.0.0",
+    "ngx-file-drop": "^15.0.0",
     "ngx-modal-dialog": "^4.0.0",
     "rxjs": "~7.5.0",
     "tslib": "^2.3.0",

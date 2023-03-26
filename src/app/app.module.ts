@@ -17,6 +17,9 @@ import { GroupBlockComponent } from './components/group-block/group-block.compon
 import { UserBlockComponent } from './components/user-block/user-block.component';
 import { CommonModule } from '@angular/common';
 import { TutorialComponent } from './components/tutorial/tutorial.component';
+import { UploadfileComponent } from './components/uploadfile/uploadfile.component';
+import { NgxFileDropModule } from 'ngx-file-drop';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 
 @NgModule({
   declarations: [
@@ -34,13 +37,17 @@ import { TutorialComponent } from './components/tutorial/tutorial.component';
     BrowserAnimationsModule,
     AppRoutingModule,
     NgbModule,
+    FormsModule,
+    ReactiveFormsModule,
     NgbTimepickerModule,
     CommonModule,
     HttpClientModule,
     ContextMenuModule,
+    NgxFileDropModule,
     CalendarModule.forRoot({ provide: DateAdapter, useFactory: adapterFactory })
   ],
   providers: [],
+  exports: [],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

@@ -1,0 +1,37 @@
+<div class="modal-header">
+  <h4 class="modal-title">{{ modalTitle }}</h4>
+  <button type="button" class="btn-close" aria-label="Close" (click)="activeModal.dismiss('Cross click')"></button>
+</div>
+<div class="modal-body">
+    <form class="form d-flex flex-column justify-content-evenly align-items-center">
+      <div *ngIf="isLoading" class="spinner-grow" style="width: 5rem; height: 5rem; background: white;" role="status">
+      </div>
+      <div *ngIf="hasResult && !isLoading" class="parseResult">
+        <span><h3>Результат обработки:</h3></span>
+        <span>Ссылка для скачивания результата: {{this.execResult.urlResult}}</span>
+        <span>Обработано файлов: {{this.execResult.files}}</span>
+        <span>Прогресс категоризации: {{this.execResult.progress}}</span>
+        <span>Время обработки: {{this.execResult.execTime}} c.</span>
+        <span style="width: 60%;"><button class="parseResultBtn" type="button"
+          (click)="hasResult=false;">Загрузить ещё</button></span>
+      </div>
+      <ngx-file-drop style="width: 100%; height: 100%;" *ngIf="!isLoading && !hasResult" dropZoneLabel="Drop files here" (onFileDrop)="dropped($event)"
+        (onFileOver)="fileOver($event)" (onFileLeave)="fileLeave($event)" [multiple]="true" [directory]="false"
+        accept="image/png, image/jpeg, .pdf, .docx" class="dropbox" dropZoneClassName="dropboxZone"
+        contentClassName="dropboxContent" browseBtnClassName="dropboxBrowse">
+        <ng-template ngx-file-drop-content-tmp let-openFileSelector="openFileSelector" dropZoneClassName="dropboxZone" style="width: 100%; height: 100%;">
+          <span>Перетащите нужные файлы в эту зону</span><br>
+          <span>или</span><br>
+          <span style="width: 100%;">
+            <button class="dropboxBrowse" browseBtnClassName="dropboxBrowse" type="button"
+              (click)="openFileSelector()">Выберите файлы вручную</button>
+            <button *ngIf="isFilesReadyForDownload" class="dropboxBrowse" browseBtnClassName="dropboxBrowse" type="button"
+              (click)="upload()">Загрузить</button>
+          </span>
+        </ng-template>
+      </ngx-file-drop>
+    </form>
+</div>
+<div class="modal-footer">
+  <button type="button" class="btn btn-outline-dark" (click)="activeModal.close('Close click')">Закрыть</button>
+</div>
