@@ -75,15 +75,18 @@ export class CalendarBlockComponent {
   }
 
   addEvent(event: CalendarEvent): void {
-    this.events.push({
-      id: event.id,
-      start: new Date(event.start),
-      end: new Date(event.end!),
-      title: event.title,
-      color: event.color,
-      allDay: false,
-    });
-    this.refresh.next();
+    if (this.events.some(e => e.id === event.id)) {
+      return;
+    }
+      this.events.push({
+        id: event.id,
+        start: new Date(event.start),
+        end: new Date(event.end!),
+        title: event.title,
+        color: event.color,
+        allDay: false,
+      });
+      this.refresh.next();
   }
 
   onOpen(date: Date) {
@@ -103,7 +106,6 @@ export class CalendarBlockComponent {
               console.log(error.error);
             }
           );
-
         modalRef.dismiss();
       });
     }
@@ -150,7 +152,7 @@ export class CalendarBlockComponent {
   }
 
   refreshScedule() {
-    this.events = [];
+    this.events = new Array();
     
     this.http.get<any>(API_URL + '/profile', AuthService.getJwtHeaderJSON())
     .subscribe(
@@ -160,6 +162,7 @@ export class CalendarBlockComponent {
           this.http.get<any>(API_URL + '/lessons/', AuthService.getJwtHeaderJSON())
             .subscribe(
               (result: any) => {
+                
                 result.forEach((e: CalendarEvent<any>) => this.addEvent(e));
               },
               (error: HttpErrorResponse) => {

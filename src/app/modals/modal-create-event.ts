@@ -37,6 +37,7 @@ const API_URL: string = environment.apiUrl;
                     <option *ngFor="let g of groups" value='{{ g.id }}'>{{ g.name + " - " + (g.category ? g.category.name : "Без направления") }}</option>
                 </select>
             </p>
+            <p>Повтор события: <input type="number" id="eventCount" min="1" value="1" required> раз.</p>
 		</div>
 		<div class="modal-footer">
             <button type="button" class="btn btn-outline-dark" (click)="createEvent()">Создать</button>
@@ -68,7 +69,16 @@ export class ModalCreateEvent {
     this.readGroups();
   }
 
+  private addDays(date: Date, days: number) {
+    var result = new Date(date);
+    result.setDate(result.getDate() + days);
+    return result;
+  }
+
   createEvent() {
+
+    let counts = parseInt((document.getElementById('eventCount') as HTMLInputElement).value);
+
     let tempDate = this.date;
     tempDate.setHours(this.startTime.hour, this.startTime.minute);
     let startDate = new Date(tempDate);
@@ -76,28 +86,32 @@ export class ModalCreateEvent {
     tempDate.setHours(this.endTime.hour, this.endTime.minute);
     let endDate = new Date(tempDate);
 
-    if (!(document.getElementById("textEvent") as HTMLInputElement).value) {
-      (document.getElementById("textEvent") as HTMLInputElement).setCustomValidity("Заголовок мероприятия - обязательный параметр");
-      (document.getElementById("textEvent") as HTMLInputElement).reportValidity();
-      return;
-    }
+    for(let i = 0; i < counts; i++) {
+      if (!(document.getElementById("textEvent") as HTMLInputElement).value) {
+        (document.getElementById("textEvent") as HTMLInputElement).setCustomValidity("Заголовок мероприятия - обязательный параметр");
+        (document.getElementById("textEvent") as HTMLInputElement).reportValidity();
+        return;
+      }
 
-    if (startDate >= endDate) {
-      alert("Время начала позже или равно времени окончания");
-      return;
-    }
+      if (startDate >= endDate) {
+        alert("Время начала позже или равно времени окончания");
+        return;
+      }
 
-    let newEvent = {
-      start: startDate,
-      end: endDate,
-      title: (document.getElementById("textEvent") as HTMLInputElement).value,
-      color: {
-        primary: (document.getElementById("colorEvent") as HTMLInputElement).value,
-      },
-      description: (document.getElementById("textDescription") as HTMLInputElement).value,
-      group: { id: (document.getElementById("group") as HTMLSelectElement).value }
+      let newEvent = {
+        start: startDate,
+        end: endDate,
+        title: (document.getElementById("textEvent") as HTMLInputElement).value,
+        color: {
+          primary: (document.getElementById("colorEvent") as HTMLInputElement).value,
+        },
+        description: (document.getElementById("textDescription") as HTMLInputElement).value,
+        group: { id: (document.getElementById("group") as HTMLSelectElement).value }
+      }
+      this.passEntry.emit(newEvent);
+      startDate = this.addDays(startDate,7);
+      endDate = this.addDays(endDate,7);
     }
-    this.passEntry.emit(newEvent);
   }
 
   readTeachers() {

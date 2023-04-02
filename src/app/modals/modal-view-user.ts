@@ -5,8 +5,14 @@ import { NgbActiveModal, NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { environment } from 'src/environments/environment';
 import { AuthService } from '../auth.service';
 import { UploadfileComponent } from '../components/uploadfile/uploadfile.component';
+import { DownloadService } from '../download.service';
 import { Document } from '../models/document';
 import { User } from '../models/user';
+import { saveAs } from 'file-saver';
+
+import pdfMake from "pdfmake/build/pdfmake";
+import pdfFonts from "pdfmake/build/vfs_fonts";
+pdfMake.vfs = pdfFonts.pdfMake.vfs; 
 
 const API_URL: string = environment.apiUrl;
 
@@ -23,9 +29,8 @@ const API_URL: string = environment.apiUrl;
             <p>Фамилия: <input type="text" id="surnameUser" minlength="1" maxlength="100" value="{{user.surname}}" [disabled]="!allowToEdit"></p>
             <p>Имя: <input type="text" id="nameUser" minlength="1" maxlength="100" value="{{user.name}}" [disabled]="!allowToEdit"></p>
             <p>Отчество: <input type="text" id="patronymicUser" minlength="1" maxlength="100" value="{{user.patronymic}}" [disabled]="!allowToEdit"></p>
-            <p>Email: <input type="text" id="emailUser" minlength="1" maxlength="100" value="{{user.email}}" [disabled]="!allowToEdit"></p>
             <p>Логин: <input type="text" id="loginUser" minlength="1" maxlength="100" value="{{user.login}}" [disabled]="!allowToEdit"></p>
-            <p>Телефон: <input type="phone" id="contactUser" minlength="1" maxlength="100" value="{{user.contact}}" [disabled]="!allowToEdit"></p>
+            <p>Телефон: <input type="phone" id="parentContact" minlength="1" maxlength="100" value="{{user.parentContact}}" [disabled]="!allowToEdit"></p>
             <p>Роль: 
                 <select id="role" disabled>
                     <option>{{ this.user.roles[0].displayName }}</option>
@@ -62,7 +67,8 @@ const API_URL: string = environment.apiUrl;
                 </label>
             </div>
 
-            <button type="button" class="btn btn-outline-dark" (click)="uploadFiles()">Прикрепить файлы</button>
+            <button type="button" class="btn btn-outline-dark" *ngIf="currentUser.roles[0].systemName == 'ADMIN'" (click)="uploadFiles()">Прикрепить файлы</button>
+            <button type="button" class="btn btn-outline-dark" *ngIf="currentUser.roles[0].systemName == 'ADMIN' && user.roles[0].systemName == 'STUDENT'" (click)="generatePDF(user)">Сгенерировать договор</button>
 
             <button type="button" class="btn btn-outline-dark" *ngIf="currentUser.roles[0].systemName == 'ADMIN'" (click)="editUser()">Редактировать</button>
             <button type="button" class="btn btn-outline-dark" *ngIf="currentUser.roles[0].systemName == 'ADMIN'" (click)="removeUser()">Удалить</button>
@@ -81,14 +87,26 @@ export class ModalViewUser {
     constructor(public activeModal: NgbActiveModal,
         private http: HttpClient,
         private authService: AuthService,
-        private modalService: NgbModal) { }
+        private modalService: NgbModal,
+        private downloadService: DownloadService) { }
 
     ngOnInit() {
         this.loadAttachments();
     }
 
-    downloadAtt(doc: Document) {
+    generatePDF(user: User) {  
+        let docDefinition = {  
+            header: 'C#Corner PDF Header',  
+            content: 'Sample PDF generated with Angular and PDFMake for C#Corner Blog'  
+        };  
+    
+        pdfMake.createPdf(docDefinition).download();  
+    }  
 
+    downloadAtt(doc: Document) {
+        this.downloadService
+            .download(doc.id)
+            .subscribe(blob => saveAs(blob, doc.name));
     }
 
     deleteAtt(doc: Document) {
@@ -167,9 +185,8 @@ export class ModalViewUser {
             this.user.surname = (document.getElementById("surnameUser") as HTMLInputElement).value;
             this.user.name = (document.getElementById("nameUser") as HTMLInputElement).value;
             this.user.patronymic = (document.getElementById("patronymicUser") as HTMLInputElement).value;
-            this.user.email = (document.getElementById("emailUser") as HTMLInputElement).value;
             this.user.login = (document.getElementById("loginUser") as HTMLInputElement).value;
-            this.user.contact = (document.getElementById("contactUser") as HTMLInputElement).value;
+            this.user.parentContact = (document.getElementById("parentContact") as HTMLInputElement).value;
 
             this.http.put<any>(API_URL + '/users/', this.user, AuthService.getJwtHeaderJSON())
                 .subscribe(

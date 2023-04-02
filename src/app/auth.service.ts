@@ -40,4 +40,7 @@ export class AuthService {
   static getJwtHeaderPlain() {
     return {headers: {'Authorization':"Bearer " + JSON.parse(sessionStorage.getItem('user')!).token}};
   }
+  static getJwt() {
+    return {'Authorization':"Bearer " + JSON.parse(sessionStorage.getItem('user')!).token};
+  }
 }
