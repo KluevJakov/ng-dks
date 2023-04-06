@@ -95,12 +95,9 @@ export class ModalViewUser {
     }
 
     generatePDF(user: User) {  
-        let docDefinition = {  
-            header: 'C#Corner PDF Header',  
-            content: 'Sample PDF generated with Angular and PDFMake for C#Corner Blog'  
-        };  
-    
-        pdfMake.createPdf(docDefinition).download();  
+        this.downloadService
+            .generate(user.id)
+            .subscribe(blob => saveAs(blob, user.login));
     }  
 
     downloadAtt(doc: Document) {

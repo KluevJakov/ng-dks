@@ -19,4 +19,11 @@ export class DownloadService {
         responseType: 'blob'
     });
   }
+
+  generate(id: number | undefined): Observable<Blob> {
+    return this.http.get(`${environment.apiUrl}/users/genDoc/${id}`, {
+        headers: AuthService.getJwt(),
+        responseType: 'blob'
+    });
+  }
 }
